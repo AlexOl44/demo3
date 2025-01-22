@@ -43,6 +43,20 @@
     </table>
 </section>
 
+<!-- Formularz dodawania kategorii -->
+<section>
+    <h2>Add Category</h2>
+    <form th:action="@{/categories/add}" th:object="${category}" method="post">
+        <label for="categoryName">Category Name</label>
+        <input type="text" id="categoryName" th:field="*{name}" required>
+
+        <label for="categoryDescription">Description</label>
+        <input type="text" id="categoryDescription" th:field="*{description}">
+
+        <button type="submit">Add Category</button>
+    </form>
+</section>
+
 <!-- Formularz dodawania wydatku -->
 <section>
     <h2>Add Expense</h2>
@@ -62,20 +76,6 @@
         <input type="date" id="date" th:field="*{date}" required>
 
         <button type="submit">Add Expense</button>
-    </form>
-</section>
-
-<!-- Formularz dodawania kategorii -->
-<section>
-    <h2>Add Category</h2>
-    <form th:action="@{/categories/add}" th:object="${category}" method="post">
-        <label for="categoryName">Category Name</label>
-        <input type="text" id="categoryName" th:field="*{name}" required>
-
-        <label for="categoryDescription">Description</label>
-        <input type="text" id="categoryDescription" th:field="*{description}">
-
-        <button type="submit">Add Category</button>
     </form>
 </section>
 

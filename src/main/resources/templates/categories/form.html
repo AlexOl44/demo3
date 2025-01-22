@@ -21,5 +21,10 @@
     <button type="submit">Save Category</button>
 </form>
 <a th:href="@{/categories}">Back to Categories</a>
+<!-- Podsumowanie wydatków -->
+<section>
+    <h2>Summary</h2>
+    <p>Total Expenses: <span th:text="${totalExpenses}">0.00</span></p>
+</section>
 </body>
 </html>
