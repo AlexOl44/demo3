@@ -1,25 +1,30 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Dodaj Kategorię</title>
+    <title>Add Category</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
+    <style>
+        form { margin-top: 20px; }
+        label { display: block; margin-bottom: 5px; }
+        input, button { margin-bottom: 10px; width: 100%; padding: 8px; }
+    </style>
 </head>
 <body>
-<h1>Dodaj Nową Kategorię</h1>
-<form th:action="@{/Category/save}" th:object="${category}" method="post">
+<h1>Add Category</h1>
+<form th:action="@{/categories/add}" th:object="${category}" method="post">
+    <label for="name">Category Name</label>
+    <input type="text" id="name" th:field="*{name}" required>
 
-    <label for="name">Nazwa kategorii:</label>
-    <input type="text" id="name" th:field="*{name}" placeholder="Wprowadź nazwę kategorii" required/>
-    <br/>
+    <label for="description">Description</label>
+    <input type="text" id="description" th:field="*{description}">
 
-
-    <label for="description">Opis kategorii:</label>
-    <textarea id="description" th:field="*{description}" placeholder="Wprowadź opis kategorii"></textarea>
-    <br/>
-
-    <button type="submit">Zapisz</button>
+    <button type="submit">Save Category</button>
 </form>
-
-<a href="/expenses">Powrót do listy wydatków</a>
-
+<a th:href="@{/categories}">Back to Categories</a>
+<!-- Podsumowanie wydatków -->
+<section>
+    <h2>Summary</h2>
+    <p>Total Expenses: <span th:text="${totalExpenses}">0.00</span></p>
+</section>
 </body>
 </html>

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Expense List</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
+    <style>
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+        th { background-color: #f4f4f4; }
+    </style>
+</head>
+<body>
+<h1>All Expenses</h1>
+<table>
+    <thead>
+    <tr>
+        <th>Amount</th>
+        <th>Category</th>
+        <th>Description</th>
+        <th>Date</th>
+        <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="expense : ${expenses}">
+        <td th:text="${expense.amount}"></td>
+        <td th:text="${expense.category}"></td>
+        <td th:text="${expense.description}"></td>
+        <td th:text="${expense.date}"></td>
+        <td>
+            <a th:href="@{/expenses/edit/{id}(id=${expense.id})}">Edit</a>
+            <a th:href="@{/expenses/delete/{id}(id=${expense.id})}" onclick="return confirm('Are you sure?')">Delete</a>
+        </td>
+    </tr>
+    </tbody>
+</table>
+<a th:href="@{/expenses/add}">Add Expense</a>
+</body>
+</html>

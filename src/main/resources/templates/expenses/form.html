@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Add/Edit Expense</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
+    <style>
+        form { margin-top: 20px; }
+        label { display: block; margin-bottom: 5px; }
+        input, select, button { margin-bottom: 10px; width: 100%; padding: 8px; }
+    </style>
+</head>
+<body>
+<h1 th:text="${#strings.isEmpty(expense.id) ? 'Add Expense' : 'Edit Expense'}"></h1>
+<form th:action="@{${#strings.isEmpty(expense.id) ? '/expenses/add' : '/expenses/edit/' + expense.id}}" th:object="${expense}" method="post">
+    <label for="amount">Amount</label>
+    <input type="number" id="amount" th:field="*{amount}" min="0" required>
+
+    <label for="category">Category</label>
+    <select id="category" th:field="*{category}" required>
+        <option th:each="category : ${categories}" th:value="${category}" th:text="${category}"></option>
+    </select>
+
+    <label for="description">Description</label>
+    <input type="text" id="description" th:field="*{description}">
+
+    <label for="date">Date</label>
+    <input type="date" id="date" th:field="*{date}" required>
+
+    <button type="submit" th:text="${#strings.isEmpty(expense.id) ? 'Add Expense' : 'Save Changes'}"></button>
+</form>
+<a th:href="@{/expenses}">Back to Expenses</a>
+</body>
+</html>
