@@ -1,27 +1,88 @@
-<!DOCTYPE html>
+<<!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Expenses</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
+    <style>
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+        th { background-color: #f4f4f4; }
+        form { margin-top: 20px; }
+        label { display: block; margin-bottom: 5px; }
+        input, select, button { margin-bottom: 10px; width: 100%; padding: 8px; }
+    </style>
 </head>
 <body>
-<h1>Expenses</h1>
-<table>
-    <thead>
-    <tr>
-        <th>Amount</th>
-        <th>Category</th>
-        <th>Description</th>
-        <th>Date</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr th:each="expense : ${expenses}">
-        <td th:text="${expense.amount}"></td>
-        <td th:text="${expense.category}"></td>
-        <td th:text="${expense.description}"></td>
-        <td th:text="${expense.date}"></td>
-    </tr>
-    </tbody>
-</table>
+<h1>Expense Tracker</h1>
+
+<!-- Lista wydatków -->
+<section>
+    <h2>Expenses</h2>
+    <table>
+        <thead>
+        <tr>
+            <th>Amount</th>
+            <th>Category</th>
+            <th>Description</th>
+            <th>Date</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="expense : ${expenses}">
+            <td th:text="${expense.amount}"></td>
+            <td th:text="${expense.category}"></td>
+            <td th:text="${expense.description}"></td>
+            <td th:text="${expense.date}"></td>
+            <td>
+                <a th:href="@{/expenses/edit/{id}(id=${expense.id})}">Edit</a>
+                <a th:href="@{/expenses/delete/{id}(id=${expense.id})}" onclick="return confirm('Are you sure?')">Delete</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</section>
+
+<!-- Formularz dodawania wydatku -->
+<section>
+    <h2>Add Expense</h2>
+    <form th:action="@{/expenses/add}" th:object="${expense}" method="post">
+        <label for="amount">Amount</label>
+        <input type="number" id="amount" th:field="*{amount}" min="0" required>
+
+        <label for="category">Category</label>
+        <select id="category" th:field="*{category}" required>
+            <option th:each="category : ${categories}" th:value="${category.name}" th:text="${category.name}"></option>
+        </select>
+
+        <label for="description">Description</label>
+        <input type="text" id="description" th:field="*{description}">
+
+        <label for="date">Date</label>
+        <input type="date" id="date" th:field="*{date}" required>
+
+        <button type="submit">Add Expense</button>
+    </form>
+</section>
+
+<!-- Formularz dodawania kategorii -->
+<section>
+    <h2>Add Category</h2>
+    <form th:action="@{/categories/add}" th:object="${category}" method="post">
+        <label for="categoryName">Category Name</label>
+        <input type="text" id="categoryName" th:field="*{name}" required>
+
+        <label for="categoryDescription">Description</label>
+        <input type="text" id="categoryDescription" th:field="*{description}">
+
+        <button type="submit">Add Category</button>
+    </form>
+</section>
+
+<!-- Podsumowanie wydatków -->
+<section>
+    <h2>Summary</h2>
+    <p>Total Expenses: <span th:text="${totalExpenses}">0.00</span></p>
+</section>
 </body>
 </html>
