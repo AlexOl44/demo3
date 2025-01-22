@@ -26,7 +26,7 @@ public class CategoryController {
     @GetMapping("/add")
     public String showAddCategoryForm(Model model) {
         model.addAttribute("category", new Category());
-        return "categories/add";
+        return "categories/form";
     }
 
     @PostMapping("/add")

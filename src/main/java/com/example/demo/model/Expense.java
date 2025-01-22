@@ -17,8 +17,9 @@ public class Expense {
     @Min(value = 0, message = "Amount must be greater than or equal to 0")
     private Double amount;
 
-    @NotBlank(message = "Category is required")
-    private String category;
+    @NotNull
+    @ManyToOne
+    private Category category;
 
     private String description;
 
@@ -41,11 +42,11 @@ public class Expense {
         this.amount = amount;
     }
 
-    public String getCategory() {
+    public Category getCategory() {
         return category;
     }
 
-    public void setCategory(String category) {
+    public void setCategory(Category category) {
         this.category = category;
     }
 

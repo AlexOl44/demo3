@@ -19,19 +19,19 @@ public class ExpenseController {
     @GetMapping
     public String showAllExpenses(Model model) {
         model.addAttribute("expenses", expenseRepository.findAll());
-        return "index";
+        return "expenses/list";
     }
 
     @GetMapping("/add")
     public String showAddExpenseForm(Model model) {
         model.addAttribute("expense", new Expense());
-        return "add-expense";
+        return "expenses/form";
     }
 
     @PostMapping("/add")
     public String addExpense(@Valid @ModelAttribute Expense expense, BindingResult result) {
         if (result.hasErrors()) {
-            return "add-expense";
+            return "expenses/list";
         }
         expenseRepository.save(expense);
         return "redirect:/expenses";
