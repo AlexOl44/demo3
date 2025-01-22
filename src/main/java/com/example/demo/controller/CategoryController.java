@@ -1,7 +1,6 @@
 package com.example.demo.controller;
 
 import com.example.demo.model.Category;
-import com.example.demo.model.Expense;  // Importuj klasę Expense
 import com.example.demo.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -18,8 +17,6 @@ public class CategoryController {
     @GetMapping
     public String showAllCategories(Model model) {
         model.addAttribute("categories", categoryService.findAll());
-        model.addAttribute("category", new Category());  // Dodaj obiekt category
-        model.addAttribute("expense", new Expense());  // Dodaj obiekt expense
         return "categories/list";
     }
 
@@ -34,5 +31,27 @@ public class CategoryController {
         categoryService.save(category);
         return "redirect:/categories";
     }
-}
 
+    @GetMapping("/edit/{id}")
+    public String showEditCategoryForm(@PathVariable Long id, Model model) {
+        // Sprawdzamy, czy kategoria istnieje, używając Optional
+        Category category = categoryService.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid category ID: " + id));
+
+        model.addAttribute("category", category);
+        return "categories/edit-category";  // Formularz edycji
+    }
+
+    @PostMapping("/edit/{id}")
+    public String editCategory(@PathVariable Long id, @ModelAttribute Category category) {
+        category.setId(id);  // Ustawiamy ID kategorii, aby zaktualizować istniejącą kategorię
+        categoryService.save(category);
+        return "redirect:/categories";  // Przekierowanie po zapisaniu zmian
+    }
+
+    @GetMapping("/delete/{id}")
+    public String deleteCategory(@PathVariable Long id) {
+        categoryService.delete(id);
+        return "redirect:/categories";  // Przekierowanie po usunięciu kategorii
+    }
+}
