@@ -35,7 +35,7 @@ public class ExpenseController {
         // Przekazanie sumy i listy wydatków do modelu
         model.addAttribute("totalExpenses", totalExpenses);
         model.addAttribute("expenses", expenses);
-        return "expenses/list";
+        return "expenses/list";  // Zwrócenie widoku listy wydatków
     }
 
     @GetMapping("/add")
@@ -52,7 +52,6 @@ public class ExpenseController {
 
     @PostMapping("/add")
     public String addExpense(@Valid @ModelAttribute Expense expense,
-                             @RequestParam(required = false) String newCategory,
                              BindingResult result, Model model) {
         if (result.hasErrors()) {
             List<Expense> expenses = expenseRepository.findAll();
@@ -60,13 +59,6 @@ public class ExpenseController {
             model.addAttribute("totalExpenses", totalExpenses);
             model.addAttribute("categories", categoryService.findAll());
             return "expenses/form";
-        }
-
-        // Dodanie nowej kategorii, jeśli użytkownik ją podał
-        if (newCategory != null && !newCategory.isEmpty()) {
-            Category category = new Category();
-            category.setName(newCategory);
-            categoryService.save(category);  // Zapisanie nowej kategorii
         }
 
         expenseRepository.save(expense);  // Zapisanie wydatku

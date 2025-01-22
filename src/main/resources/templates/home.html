@@ -6,7 +6,8 @@
     <style>
         body { font-family: Arial, sans-serif; margin: 20px; }
         h1 { color: #333; }
-        a { display: inline-block; padding: 10px 20px; background: #007bff; color: #fff; text-decoration: none; border-radius: 5px; }
+        .summary { font-size: 1.5em; font-weight: bold; margin-top: 20px; }
+        a { display: inline-block; margin-top: 20px; padding: 10px 20px; background: #007bff; color: #fff; text-decoration: none; border-radius: 5px; }
         a:hover { background: #0056b3; }
     </style>
 </head>
@@ -14,10 +15,13 @@
 
 <h1>Welcome to the Expense Tracker</h1>
 
-<div>
-    <a th:href="@{/categories}">Manage Categories</a>
-    <a th:href="@{/expenses}">Manage Expenses</a>
+<!-- Wyświetlenie sumy wydatków -->
+<div class="summary">
+    <p>Total Expenses: <span th:text="${totalExpenses}">0.00</span> PLN</p>
 </div>
+
+<a th:href="@{/categories}">Go to Categories</a> |
+<a th:href="@{/expenses}">Go to Expenses</a>
 
 </body>
 </html>

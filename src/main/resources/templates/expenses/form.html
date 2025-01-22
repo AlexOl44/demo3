@@ -1,49 +1,47 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Add Expense</title>
+    <title>Expense Form</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> <!-- Dodanie jQuery -->
-    <script>
-        // Funkcja dodawania nowej kategorii
-        function addCategory() {
-            const categoryName = $('#newCategory').val();
-            if (categoryName) {
-                // Dodanie nowej kategorii do listy w formularzu
-                $('#category').append('<option value="' + categoryName + '">' + categoryName + '</option>');
-                $('#newCategory').val(''); // Wyczyść pole tekstowe
-            }
-        }
-    </script>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        h1 { color: #333; }
+        .summary { font-size: 1.5em; font-weight: bold; margin-top: 20px; }
+        a { display: inline-block; margin-top: 20px; padding: 10px 20px; background: #007bff; color: #fff; text-decoration: none; border-radius: 5px; }
+        a:hover { background: #0056b3; }
+        .button { padding: 10px 20px; background-color: #28a745; color: white; text-decoration: none; border-radius: 5px; }
+        .button:hover { background-color: #218838; }
+    </style>
 </head>
 <body>
-<h1>Add Expense</h1>
+
+<h1>Expense Form</h1>
+
+<!-- Wyświetlenie sumy wydatków -->
+<div class="summary">
+    <p>Total Expenses: <span th:text="${totalExpenses}">0.00</span> PLN</p>
+</div>
+
+<!-- Formularz do dodania wydatku -->
 <form th:action="@{/expenses/add}" th:object="${expense}" method="post">
     <label for="amount">Amount:</label>
-    <input type="number" id="amount" th:field="*{amount}" min="0" required>
+    <input type="number" id="amount" th:field="*{amount}" required /><br>
 
     <label for="category">Category:</label>
-    <select id="category" th:field="*{category.id}" required>
+    <select id="category" th:field="*{category}" required>
         <option th:each="category : ${categories}" th:value="${category.id}" th:text="${category.name}"></option>
-    </select>
-
-    <!-- Pole do dodawania nowej kategorii -->
-    <label for="newCategory">New Category:</label>
-    <input type="text" id="newCategory" name="newCategory" placeholder="Add new category" />
-    <button type="button" onclick="addCategory()">Add Category</button>
+    </select><br>
 
     <label for="description">Description:</label>
-    <input type="text" id="description" th:field="*{description}">
+    <input type="text" id="description" th:field="*{description}" /><br>
 
     <label for="date">Date:</label>
-    <input type="date" id="date" th:field="*{date}" required>
+    <input type="date" id="date" th:field="*{date}" required /><br>
 
-    <button type="submit">Save Expense</button>
+    <button type="submit" class="button">Save Expense</button>
 </form>
 
-<h2>Total Expenses</h2>
-<p th:text="'Total: ' + ${totalExpenses} + ' PLN'">0.00 PLN</p>
+<a th:href="@{/expenses}">Back to Expense List</a>
 
-<a th:href="@{/expenses}">Back to Expenses</a>
 </body>
 </html>
