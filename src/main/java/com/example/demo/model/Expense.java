@@ -2,7 +2,6 @@ package com.example.demo.model;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import java.time.LocalDate;
 
@@ -17,8 +16,8 @@ public class Expense {
     @Min(value = 0, message = "Amount must be greater than or equal to 0")
     private Double amount;
 
-    @NotNull
     @ManyToOne
+    @NotNull(message = "Category is required")
     private Category category;
 
     private String description;
@@ -26,6 +25,7 @@ public class Expense {
     @NotNull(message = "Date is required")
     private LocalDate date;
 
+    // Gettery i Settery
     public Long getId() {
         return id;
     }

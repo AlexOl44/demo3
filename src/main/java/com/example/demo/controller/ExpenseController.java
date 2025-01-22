@@ -1,13 +1,17 @@
 package com.example.demo.controller;
 
+import com.example.demo.model.Category;
 import com.example.demo.model.Expense;
 import com.example.demo.repository.ExpenseRepository;
+import com.example.demo.service.CategoryService;  // Importowanie CategoryService
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @Controller
 @RequestMapping("/expenses")
@@ -16,40 +20,84 @@ public class ExpenseController {
     @Autowired
     private ExpenseRepository expenseRepository;
 
+    @Autowired
+    private CategoryService categoryService;  // Usługa do pobierania kategorii
+
     @GetMapping
-    public String showAllExpenses(Model model) {
-        model.addAttribute("expenses", expenseRepository.findAll());
+    public String showExpenseSummary(Model model) {
+        List<Expense> expenses = expenseRepository.findAll();
+
+        // Obliczanie sumy wszystkich wydatków
+        double totalExpenses = expenses.stream()
+                .mapToDouble(Expense::getAmount)
+                .sum();
+
+        // Przekazanie sumy i listy wydatków do modelu
+        model.addAttribute("totalExpenses", totalExpenses);
+        model.addAttribute("expenses", expenses);
         return "expenses/list";
     }
 
     @GetMapping("/add")
     public String showAddExpenseForm(Model model) {
+        List<Expense> expenses = expenseRepository.findAll();
+        double totalExpenses = expenses.stream().mapToDouble(Expense::getAmount).sum();
+
+        // Przekazanie listy kategorii do formularza
         model.addAttribute("expense", new Expense());
+        model.addAttribute("categories", categoryService.findAll());  // Lista dostępnych kategorii
+        model.addAttribute("totalExpenses", totalExpenses);
         return "expenses/form";
     }
 
     @PostMapping("/add")
-    public String addExpense(@Valid @ModelAttribute Expense expense, BindingResult result) {
+    public String addExpense(@Valid @ModelAttribute Expense expense,
+                             @RequestParam(required = false) String newCategory,
+                             BindingResult result, Model model) {
         if (result.hasErrors()) {
-            return "expenses/list";
+            List<Expense> expenses = expenseRepository.findAll();
+            double totalExpenses = expenses.stream().mapToDouble(Expense::getAmount).sum();
+            model.addAttribute("totalExpenses", totalExpenses);
+            model.addAttribute("categories", categoryService.findAll());
+            return "expenses/form";
         }
-        expenseRepository.save(expense);
+
+        // Dodanie nowej kategorii, jeśli użytkownik ją podał
+        if (newCategory != null && !newCategory.isEmpty()) {
+            Category category = new Category();
+            category.setName(newCategory);
+            categoryService.save(category);  // Zapisanie nowej kategorii
+        }
+
+        expenseRepository.save(expense);  // Zapisanie wydatku
         return "redirect:/expenses";
     }
 
     @GetMapping("/edit/{id}")
     public String showEditExpenseForm(@PathVariable Long id, Model model) {
-        model.addAttribute("expense", expenseRepository.findById(id).orElseThrow());
-        return "edit-expense";
+        Expense expense = expenseRepository.findById(id).orElseThrow();
+        List<Expense> expenses = expenseRepository.findAll();
+        double totalExpenses = expenses.stream().mapToDouble(Expense::getAmount).sum();
+
+        // Przekazanie listy kategorii do formularza
+        model.addAttribute("expense", expense);
+        model.addAttribute("categories", categoryService.findAll());  // Lista dostępnych kategorii
+        model.addAttribute("totalExpenses", totalExpenses);
+        return "expenses/form";
     }
 
     @PostMapping("/edit/{id}")
-    public String editExpense(@PathVariable Long id, @Valid @ModelAttribute Expense expense, BindingResult result) {
+    public String editExpense(@PathVariable Long id, @Valid @ModelAttribute Expense expense,
+                              BindingResult result, Model model) {
         if (result.hasErrors()) {
-            return "edit-expense";
+            List<Expense> expenses = expenseRepository.findAll();
+            double totalExpenses = expenses.stream().mapToDouble(Expense::getAmount).sum();
+            model.addAttribute("totalExpenses", totalExpenses);
+            model.addAttribute("categories", categoryService.findAll());
+            return "expenses/form";
         }
         expense.setId(id);
-        expenseRepository.save(expense);
+        expenseRepository.save(expense);  // Zapisanie zaktualizowanego wydatku
         return "redirect:/expenses";
     }
 

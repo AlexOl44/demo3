@@ -1,39 +1,43 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Expense List</title>
+    <title>Expense Summary</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
     <style>
-        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
-        th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
-        th { background-color: #f4f4f4; }
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        h1 { color: #333; }
+        .summary { font-size: 1.5em; font-weight: bold; margin-top: 20px; }
+        .expense-item { margin-bottom: 10px; }
+        a { display: inline-block; margin-top: 20px; padding: 10px 20px; background: #007bff; color: #fff; text-decoration: none; border-radius: 5px; }
+        a:hover { background: #0056b3; }
     </style>
 </head>
 <body>
-<h1>All Expenses</h1>
-<table>
-    <thead>
-    <tr>
-        <th>Amount</th>
-        <th>Category</th>
-        <th>Description</th>
-        <th>Date</th>
-        <th>Actions</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr th:each="expense : ${expenses}">
-        <td th:text="${expense.amount}"></td>
-        <td th:text="${expense.category}"></td>
-        <td th:text="${expense.description}"></td>
-        <td th:text="${expense.date}"></td>
-        <td>
-            <a th:href="@{/expenses/edit/{id}(id=${expense.id})}">Edit</a>
-            <a th:href="@{/expenses/delete/{id}(id=${expense.id})}" onclick="return confirm('Are you sure?')">Delete</a>
-        </td>
-    </tr>
-    </tbody>
-</table>
-<a th:href="@{/expenses/add}">Add Expense</a>
+
+<h1>Expense Summary</h1>
+
+<!-- Wyświetlenie sumy wydatków -->
+<div class="summary">
+    <p>Total Expenses: <span th:text="${totalExpenses}">0.00</span> PLN</p>
+</div>
+
+<!-- Wyświetlenie listy wydatków -->
+<h2>Expenses</h2>
+<div class="expense-list">
+    <ul>
+        <li th:each="expense : ${expenses}" class="expense-item">
+            <span th:text="${expense.description} + ' - ' + ${expense.amount} + ' PLN'"></span>
+            <a th:href="@{/expenses/edit/{id}(id=${expense.id})}">Edit</a> |
+            <a th:href="@{/expenses/delete/{id}(id=${expense.id})}" th:onclick="return confirm('Are you sure you want to delete this expense?')">Delete</a>
+        </li>
+    </ul>
+</div>
+
+<!-- Link do dodania nowego wydatku -->
+<a th:href="@{/expenses/add}">Add New Expense</a>
+
+<!-- Powrót do strony głównej -->
+<a th:href="@{/}">Back to Home</a>
+
 </body>
 </html>
