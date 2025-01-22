@@ -75,7 +75,7 @@ public class ExpenseController {
         model.addAttribute("expense", expense);
         model.addAttribute("categories", categoryService.findAll());  // Lista dostępnych kategorii
         model.addAttribute("totalExpenses", totalExpenses);
-        return "expenses/form";
+        return "expenses/form";  // Formularz edycji wydatku
     }
 
     @PostMapping("/edit/{id}")
@@ -86,16 +86,16 @@ public class ExpenseController {
             double totalExpenses = expenses.stream().mapToDouble(Expense::getAmount).sum();
             model.addAttribute("totalExpenses", totalExpenses);
             model.addAttribute("categories", categoryService.findAll());
-            return "expenses/form";
+            return "expenses/form";  // Ponowne wyświetlenie formularza w przypadku błędów
         }
-        expense.setId(id);
+        expense.setId(id);  // Ustawienie ID, aby zaktualizować odpowiedni rekord
         expenseRepository.save(expense);  // Zapisanie zaktualizowanego wydatku
-        return "redirect:/expenses";
+        return "redirect:/expenses";  // Przekierowanie na listę wydatków
     }
 
     @GetMapping("/delete/{id}")
     public String deleteExpense(@PathVariable Long id) {
         expenseRepository.deleteById(id);
-        return "redirect:/expenses";
+        return "redirect:/expenses";  // Przekierowanie na listę wydatków po usunięciu
     }
 }

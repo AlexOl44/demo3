@@ -83,7 +83,7 @@
             display: flex;
             justify-content: space-between;
         }
-
+a
         .actions a {
             margin: 0 10px;
         }
@@ -98,12 +98,14 @@
     <thead>
     <tr>
         <th>Name</th>
+        <th>Description</th> <!-- Dodana kolumna na opis -->
         <th>Actions</th>
     </tr>
     </thead>
     <tbody>
     <tr th:each="category : ${categories}">
         <td th:text="${category.name}"></td>
+        <td th:text="${category.description}"></td> <!-- Wyświetlanie opisu -->
         <td class="actions">
             <a th:href="@{/categories/edit/{id}(id=${category.id})}">Edit</a> |
             <a th:href="@{/categories/delete/{id}(id=${category.id})}">Delete</a>

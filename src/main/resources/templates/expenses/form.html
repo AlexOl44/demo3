@@ -22,15 +22,15 @@
 </head>
 <body>
 
-<h1>Expense Form</h1>
+<h1 th:text="${expense.id != null ? 'Edit Expense' : 'Add Expense'}"></h1>
 
 <!-- Wyświetlenie sumy wydatków -->
 <div class="summary">
     <p>Total Expenses: <span th:text="${totalExpenses}">0.00</span> PLN</p>
 </div>
 
-<!-- Formularz do dodania wydatku -->
-<form th:action="@{/expenses/add}" th:object="${expense}" method="post">
+<!-- Formularz do dodania lub edytowania wydatku -->
+<form th:action="@{${expense.id != null ? '/expenses/edit/' + expense.id : '/expenses/add'}}" th:object="${expense}" method="post">
     <label for="amount">Amount:</label>
     <input type="number" id="amount" th:field="*{amount}" required step="0.01" placeholder="Enter amount" /><br>
 
