@@ -4,11 +4,89 @@
     <title>Expense List</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
     <style>
-        body { font-family: Arial, sans-serif; margin: 20px; }
-        h1 { color: #333; }
-        .summary { font-size: 1.5em; font-weight: bold; margin-top: 20px; }
-        a { display: inline-block; margin-top: 20px; padding: 10px 20px; background: #007bff; color: #fff; text-decoration: none; border-radius: 5px; }
-        a:hover { background: #0056b3; }
+        body { font-family: Arial, sans-serif; margin: 0; background-color: #f4f7fa; padding: 20px; }
+        h1 { color: #333; text-align: center; margin-bottom: 20px; }
+
+        .summary {
+            font-size: 1.5em;
+            font-weight: bold;
+            margin-top: 20px;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .summary p { margin: 0; }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+
+        th, td {
+            padding: 10px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #007bff;
+            color: white;
+        }
+
+        td {
+            background-color: #fff;
+        }
+
+        a {
+            padding: 8px 16px;
+            background-color: #007bff;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-size: 1em;
+            transition: background-color 0.3s ease;
+        }
+
+        a:hover {
+            background-color: #0056b3;
+        }
+
+        .links {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .links a {
+            margin: 0 15px;
+            font-size: 1.2em;
+        }
+
+        .button {
+            padding: 10px 20px;
+            background-color: #28a745;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-size: 1.2em;
+            margin-top: 20px;
+        }
+
+        .button:hover {
+            background-color: #218838;
+        }
+
+        .actions {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .actions a {
+            margin: 0 10px;
+        }
     </style>
 </head>
 <body>
@@ -37,7 +115,7 @@
         <td th:text="${expense.category.name}"></td>
         <td th:text="${expense.description}"></td>
         <td th:text="${expense.date}"></td>
-        <td>
+        <td class="actions">
             <a th:href="@{/expenses/edit/{id}(id=${expense.id})}">Edit</a> |
             <a th:href="@{/expenses/delete/{id}(id=${expense.id})}">Delete</a>
         </td>
@@ -45,9 +123,11 @@
     </tbody>
 </table>
 
-<a th:href="@{/expenses/add}" class="button">Add New Expense</a>
-
-<a th:href="@{/}">Back to Home</a>
+<!-- Przycisk dodawania nowego wydatku i link powrotu do strony głównej -->
+<div class="links">
+    <a th:href="@{/expenses/add}" class="button">Add New Expense</a>
+    <a th:href="@{/}" class="button">Back to Home</a>
+</div>
 
 </body>
 </html>

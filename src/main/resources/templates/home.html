@@ -4,11 +4,38 @@
     <title>Home</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
     <style>
-        body { font-family: Arial, sans-serif; margin: 20px; }
-        h1 { color: #333; }
-        .summary { font-size: 1.5em; font-weight: bold; margin-top: 20px; }
-        a { display: inline-block; margin-top: 20px; padding: 10px 20px; background: #007bff; color: #fff; text-decoration: none; border-radius: 5px; }
+        body { font-family: Arial, sans-serif; margin: 0; background-color: #f4f7fa; padding: 20px; }
+        h1 { color: #333; text-align: center; margin-bottom: 20px; }
+        .summary { font-size: 1.5em; font-weight: bold; margin-top: 20px; text-align: center; }
+        .summary p { margin: 0; }
+
+        a {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 20px;
+            background: #007bff;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 5px;
+            font-size: 1.2em;
+            transition: background-color 0.3s ease;
+        }
         a:hover { background: #0056b3; }
+
+        .links {
+            text-align: center;
+            margin-top: 30px;
+        }
+
+        .links a {
+            margin: 0 15px;
+        }
+
+        .total-expenses {
+            margin-top: 20px;
+            font-size: 1.2em;
+            color: #555;
+        }
     </style>
 </head>
 <body>
@@ -20,8 +47,12 @@
     <p>Total Expenses: <span th:text="${totalExpenses}">0.00</span> PLN</p>
 </div>
 
-<a th:href="@{/categories}">Go to Categories</a> |
-<a th:href="@{/expenses}">Go to Expenses</a>
+<!-- Linki do kategorii i wydatków -->
+<div class="links">
+    <a th:href="@{/categories}">Go to Categories</a>
+    <span>|</span>
+    <a th:href="@{/expenses}">Go to Expenses</a>
+</div>
 
 </body>
 </html>
