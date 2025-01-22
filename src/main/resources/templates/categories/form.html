@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Dodaj Kategorię</title>
+</head>
+<body>
+<h1>Dodaj Nową Kategorię</h1>
+<form th:action="@{/Category/save}" th:object="${category}" method="post">
+
+    <label for="name">Nazwa kategorii:</label>
+    <input type="text" id="name" th:field="*{name}" placeholder="Wprowadź nazwę kategorii" required/>
+    <br/>
+
+
+    <label for="description">Opis kategorii:</label>
+    <textarea id="description" th:field="*{description}" placeholder="Wprowadź opis kategorii"></textarea>
+    <br/>
+
+    <button type="submit">Zapisz</button>
+</form>
+
+<a href="/expenses">Powrót do listy wydatków</a>
+
+</body>
+</html>
