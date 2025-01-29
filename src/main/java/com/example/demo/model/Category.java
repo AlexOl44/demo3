@@ -15,26 +15,32 @@ public class Category {
 
     private String description;
 
+    // Pobiera ID kategorii
     public Long getId() {
         return id;
     }
 
+    // Ustawia ID kategorii
     public void setId(Long id) {
         this.id = id;
     }
 
+    // Pobiera nazwę kategorii
     public String getName() {
         return name;
     }
 
+    // Ustawia nazwę kategorii
     public void setName(String name) {
         this.name = name;
     }
 
+    // Pobiera opis kategorii
     public String getDescription() {
         return description;
     }
 
+    // Ustawia opis kategorii
     public void setDescription(String description) {
         this.description = description;
     }

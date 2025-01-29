@@ -2,13 +2,19 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Home</title>
+    <!-- Importowanie Normalize.css do ujednolicenia stylów w różnych przeglądarkach -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
     <style>
+        /* Stylowanie ogólne strony */
         body { font-family: Arial, sans-serif; margin: 0; background-color: #f4f7fa; padding: 20px; }
+        /* Stylowanie nagłówka */
         h1 { color: #333; text-align: center; margin-bottom: 20px; }
+        /* Stylowanie sekcji podsumowania */
         .summary { font-size: 1.5em; font-weight: bold; margin-top: 20px; text-align: center; }
+        /* Stylowanie paragrafu w sekcji podsumowania */
         .summary p { margin: 0; }
 
+        /* Stylowanie linków */
         a {
             display: inline-block;
             margin-top: 20px;
@@ -22,15 +28,18 @@
         }
         a:hover { background: #0056b3; }
 
+        /* Stylowanie kontenera z linkami do innych stron */
         .links {
             text-align: center;
             margin-top: 30px;
         }
 
+        /* Marginesy między linkami */
         .links a {
             margin: 0 15px;
         }
 
+        /* Stylowanie sumy wydatków */
         .total-expenses {
             margin-top: 20px;
             font-size: 1.2em;
@@ -40,6 +49,7 @@
 </head>
 <body>
 
+<!-- Powitanie na stronie głównej -->
 <h1>Welcome to the Expense Tracker</h1>
 
 <!-- Wyświetlenie sumy wydatków -->
@@ -49,7 +59,9 @@
 
 <!-- Linki do kategorii i wydatków -->
 <div class="links">
+    <!-- Link do strony kategorii -->
     <a th:href="@{/categories}">Go to Categories</a>
+    <!-- Link do strony wydatków -->
     <span>|</span>
     <a th:href="@{/expenses}">Go to Expenses</a>
 </div>

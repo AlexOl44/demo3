@@ -23,6 +23,7 @@ public class ExpenseController {
     @Autowired
     private CategoryService categoryService;  // Usługa do pobierania kategorii
 
+    // Podsumowanie wszystkich wydatków
     @GetMapping
     public String showExpenseSummary(Model model) {
         List<Expense> expenses = expenseRepository.findAll();
@@ -38,6 +39,7 @@ public class ExpenseController {
         return "expenses/list";  // Zwrócenie widoku listy wydatków
     }
 
+    // Wyświetla formularz dodawania nowego wydatku
     @GetMapping("/add")
     public String showAddExpenseForm(Model model) {
         List<Expense> expenses = expenseRepository.findAll();
@@ -50,6 +52,7 @@ public class ExpenseController {
         return "expenses/form";
     }
 
+    // Obsługuje dodawanie nowego wydatku
     @PostMapping("/add")
     public String addExpense(@Valid @ModelAttribute Expense expense,
                              BindingResult result, Model model) {
@@ -65,6 +68,7 @@ public class ExpenseController {
         return "redirect:/expenses";
     }
 
+    // Wyświetla formularz edycji wydatku o podanym ID
     @GetMapping("/edit/{id}")
     public String showEditExpenseForm(@PathVariable Long id, Model model) {
         Expense expense = expenseRepository.findById(id).orElseThrow();
@@ -78,6 +82,7 @@ public class ExpenseController {
         return "expenses/form";  // Formularz edycji wydatku
     }
 
+    // Obsługuje edycję istniejącego wydatku
     @PostMapping("/edit/{id}")
     public String editExpense(@PathVariable Long id, @Valid @ModelAttribute Expense expense,
                               BindingResult result, Model model) {
@@ -93,6 +98,7 @@ public class ExpenseController {
         return "redirect:/expenses";  // Przekierowanie na listę wydatków
     }
 
+    // Usuwa wydatek o podanym ID
     @GetMapping("/delete/{id}")
     public String deleteExpense(@PathVariable Long id) {
         expenseRepository.deleteById(id);

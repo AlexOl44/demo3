@@ -73,26 +73,34 @@
 </head>
 <body>
 
+<!-- Formularz edycji wydatku -->
 <h1>Edit Expense</h1>
 
 <form th:action="@{/expenses/edit/{id}(id=${expense.id})}" th:object="${expense}" method="post">
+    <!-- Pole do wprowadzenia kwoty wydatku -->
     <label for="amount">Amount:</label>
     <input type="number" id="amount" th:field="*{amount}" required>
 
+    <!-- Lista rozwijana do wyboru kategorii -->
     <label for="category">Category:</label>
     <select id="category" th:field="*{category}" required>
+        <!-- Wypełnianie listy kategorii z obiektu "categories" -->
         <option th:each="category : ${categories}" th:value="${category.id}" th:text="${category.name}"></option>
     </select>
 
+    <!-- Pole do wprowadzenia opisu wydatku -->
     <label for="description">Description:</label>
     <input type="text" id="description" th:field="*{description}">
 
+    <!-- Pole do wprowadzenia daty wydatku -->
     <label for="date">Date:</label>
     <input type="date" id="date" th:field="*{date}" required>
 
+    <!-- Przycisk do zapisania zmian -->
     <button type="submit">Save Changes</button>
 </form>
 
+<!-- Link powrotu do listy wydatków -->
 <div class="back-link">
     <a th:href="@{/expenses}">Back to Expenses</a>
 </div>

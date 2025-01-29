@@ -13,6 +13,7 @@ public class HomeController {
     @Autowired
     private ExpenseRepository expenseRepository;
 
+    // Wyświetla stronę główną z podsumowaniem wydatków
     @GetMapping("/")
     public String showHomePage(Model model) {
         double totalExpenses = expenseRepository.findAll().stream()

@@ -2,26 +2,39 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Expense Form</title>
+    <!-- Importowanie Normalize.css, aby ujednolicić style między przeglądarkami -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
     <style>
+        /* Stylowanie całej strony */
         body { font-family: Arial, sans-serif; margin: 20px; background-color: #f4f7fa; }
+        /* Stylowanie nagłówka */
         h1 { color: #333; text-align: center; margin-bottom: 20px; }
+        /* Stylowanie sekcji podsumowania */
         .summary { font-size: 1.5em; font-weight: bold; margin-top: 20px; text-align: center; }
         .summary p { margin: 0; }
 
+        /* Stylowanie formularza */
         form { max-width: 600px; margin: 0 auto; padding: 20px; background-color: #fff; border-radius: 8px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); }
+        /* Stylowanie etykiet formularza */
         label { display: block; font-weight: bold; color: #555; margin-top: 10px; }
+        /* Stylowanie pól formularza (input, select) */
         input, select { width: 100%; padding: 10px; border-radius: 5px; border: 1px solid #ccc; font-size: 16px; margin-bottom: 20px; }
+        /* Stylowanie aktywnych pól formularza (po kliknięciu) */
         input:focus, select:focus { border-color: #007bff; outline: none; }
+        /* Stylowanie przycisku formularza */
         button { padding: 10px 20px; background-color: #28a745; color: white; border-radius: 5px; width: 100%; font-size: 16px; border: none; cursor: pointer; }
+        /* Stylowanie przycisku po najechaniu myszką */
         button:hover { background-color: #218838; }
 
+        /* Stylowanie linku powrotu do listy wydatków */
         a { display: block; text-align: center; margin-top: 20px; padding: 10px 20px; background: #007bff; color: white; text-decoration: none; border-radius: 5px; }
+        /* Stylowanie linku po najechaniu myszką */
         a:hover { background: #0056b3; }
     </style>
 </head>
 <body>
 
+<!-- Nagłówek strony - zmienia się dynamicznie w zależności od kontekstu -->
 <h1 th:text="${expense.id != null ? 'Edit Expense' : 'Add Expense'}"></h1>
 
 <!-- Wyświetlenie sumy wydatków -->
@@ -31,23 +44,30 @@
 
 <!-- Formularz do dodania lub edytowania wydatku -->
 <form th:action="@{${expense.id != null ? '/expenses/edit/' + expense.id : '/expenses/add'}}" th:object="${expense}" method="post">
+    <!-- Pole do wprowadzenia kwoty -->
     <label for="amount">Amount:</label>
     <input type="number" id="amount" th:field="*{amount}" required step="0.01" placeholder="Enter amount" /><br>
 
+    <!-- Lista rozwijana do wyboru kategorii -->
     <label for="category">Category:</label>
     <select id="category" th:field="*{category}" required>
+        <!-- Opcje kategorii generowane dynamicznie z listy "categories" -->
         <option th:each="category : ${categories}" th:value="${category.id}" th:text="${category.name}"></option>
     </select><br>
 
+    <!-- Pole do wprowadzenia opisu wydatku -->
     <label for="description">Description:</label>
     <input type="text" id="description" th:field="*{description}" placeholder="Enter description" /><br>
 
+    <!-- Pole do wprowadzenia daty wydatku -->
     <label for="date">Date:</label>
     <input type="date" id="date" th:field="*{date}" required /><br>
 
+    <!-- Przycisk do zapisania formularza -->
     <button type="submit">Save Expense</button>
 </form>
 
+<!-- Link powrotu do listy wydatków -->
 <a th:href="@{/expenses}">Back to Expense List</a>
 
 </body>

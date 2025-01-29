@@ -2,11 +2,15 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Expense List</title>
+    <!-- Importowanie Normalize.css, aby ujednolicić style między przeglądarkami -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
     <style>
+        /* Stylowanie całej strony */
         body { font-family: Arial, sans-serif; margin: 0; background-color: #f4f7fa; padding: 20px; }
+        /* Stylowanie nagłówka */
         h1 { color: #333; text-align: center; margin-bottom: 20px; }
 
+        /* Stylowanie sekcji podsumowania */
         .summary {
             font-size: 1.5em;
             font-weight: bold;
@@ -15,32 +19,39 @@
             margin-bottom: 30px;
         }
 
+        /* Usuwanie marginesów z paragrafu w sekcji podsumowania */
         .summary p { margin: 0; }
 
+        /* Stylowanie tabeli */
         table {
             width: 100%;
             border-collapse: collapse;
             margin-top: 20px;
         }
 
+        /* Stylowanie ramki tabeli, nagłówków i komórek */
         table, th, td {
             border: 1px solid #ddd;
         }
 
+        /* Stylowanie nagłówków tabeli */
         th, td {
             padding: 10px;
             text-align: left;
         }
 
+        /* Kolor tła nagłówków tabeli */
         th {
             background-color: #007bff;
             color: white;
         }
 
+        /* Kolor tła komórek tabeli */
         td {
             background-color: #fff;
         }
 
+        /* Stylowanie linków w tabeli */
         a {
             padding: 8px 16px;
             background-color: #007bff;
@@ -51,20 +62,24 @@
             transition: background-color 0.3s ease;
         }
 
+        /* Stylowanie linków po najechaniu myszką */
         a:hover {
             background-color: #0056b3;
         }
 
+        /* Stylowanie kontenera z linkami poniżej tabeli */
         .links {
             margin-top: 20px;
             text-align: center;
         }
 
+        /* Stylowanie poszczególnych linków w sekcji */
         .links a {
             margin: 0 15px;
             font-size: 1.2em;
         }
 
+        /* Stylowanie przycisku do dodawania nowego wydatku */
         .button {
             padding: 10px 20px;
             background-color: #28a745;
@@ -75,15 +90,18 @@
             margin-top: 20px;
         }
 
+        /* Stylowanie przycisku po najechaniu myszką */
         .button:hover {
             background-color: #218838;
         }
 
+        /* Stylowanie kontenera z akcjami (Edytuj / Usuń) */
         .actions {
             display: flex;
             justify-content: space-between;
         }
 
+        /* Stylowanie linków akcji (Edytuj, Usuń) */
         .actions a {
             margin: 0 10px;
         }
@@ -110,11 +128,14 @@
     </tr>
     </thead>
     <tbody>
+    <!-- Iterowanie przez listę wydatków -->
     <tr th:each="expense : ${expenses}">
+        <!-- Wyświetlanie informacji o wydatku -->
         <td th:text="${expense.amount}"></td>
         <td th:text="${expense.category.name}"></td>
         <td th:text="${expense.description}"></td>
         <td th:text="${expense.date}"></td>
+        <!-- Akcje dla każdego wydatku (Edytuj i Usuń) -->
         <td class="actions">
             <a th:href="@{/expenses/edit/{id}(id=${expense.id})}">Edit</a> |
             <a th:href="@{/expenses/delete/{id}(id=${expense.id})}">Delete</a>
@@ -125,7 +146,9 @@
 
 <!-- Przycisk dodawania nowego wydatku i link powrotu do strony głównej -->
 <div class="links">
+    <!-- Link do formularza dodawania nowego wydatku -->
     <a th:href="@{/expenses/add}" class="button">Add New Expense</a>
+    <!-- Link do powrotu do strony głównej -->
     <a th:href="@{/}" class="button">Back to Home</a>
 </div>
 

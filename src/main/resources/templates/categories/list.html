@@ -2,11 +2,15 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Category List</title>
+    <!-- Importowanie Normalize.css dla ujednolicenia stylów między przeglądarkami -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
     <style>
+        /* Stylowanie całej strony */
         body { font-family: Arial, sans-serif; margin: 0; background-color: #f4f7fa; padding: 20px; }
+        /* Nagłówek strony */
         h1 { color: #333; text-align: center; margin-bottom: 20px; }
 
+        /* Stylowanie sekcji z podsumowaniem */
         .summary {
             font-size: 1.5em;
             font-weight: bold;
@@ -17,6 +21,7 @@
 
         .summary p { margin: 0; }
 
+        /* Stylowanie tabeli */
         table {
             width: 100%;
             border-collapse: collapse;
@@ -41,6 +46,7 @@
             background-color: #fff;
         }
 
+        /* Stylowanie linków */
         a {
             padding: 8px 16px;
             background-color: #007bff;
@@ -51,10 +57,12 @@
             transition: background-color 0.3s ease;
         }
 
+        /* Zmiana koloru linku po najechaniu myszką */
         a:hover {
             background-color: #0056b3;
         }
 
+        /* Stylowanie sekcji z linkami */
         .links {
             margin-top: 20px;
             text-align: center;
@@ -65,6 +73,7 @@
             font-size: 1.2em;
         }
 
+        /* Stylowanie przycisku */
         .button {
             padding: 10px 20px;
             background-color: #28a745;
@@ -75,10 +84,12 @@
             margin-top: 20px;
         }
 
+        /* Zmiana koloru przycisku po najechaniu myszką */
         .button:hover {
             background-color: #218838;
         }
 
+        /* Stylowanie sekcji akcji (przycisków) */
         .actions {
             display: flex;
             justify-content: space-between;
@@ -91,21 +102,25 @@ a
 </head>
 <body>
 
+<!-- Nagłówek strony -->
 <h1>Category List</h1>
 
 <!-- Lista kategorii -->
 <table>
     <thead>
     <tr>
-        <th>Name</th>
+        <th>Name</th> <!-- Kolumna na nazwę kategorii -->
         <th>Description</th> <!-- Dodana kolumna na opis -->
-        <th>Actions</th>
+        <th>Actions</th> <!-- Kolumna na akcje (edytuj, usuń) -->
     </tr>
     </thead>
     <tbody>
+    <!-- Iteracja po każdej kategorii z listy categories -->
     <tr th:each="category : ${categories}">
+        <!-- Wyświetlanie nazwy kategorii -->
         <td th:text="${category.name}"></td>
         <td th:text="${category.description}"></td> <!-- Wyświetlanie opisu -->
+        <!-- Sekcja akcji z linkami do edytowania i usuwania -->
         <td class="actions">
             <a th:href="@{/categories/edit/{id}(id=${category.id})}">Edit</a> |
             <a th:href="@{/categories/delete/{id}(id=${category.id})}">Delete</a>
@@ -116,8 +131,8 @@ a
 
 <!-- Przycisk dodawania nowej kategorii i link powrotu do strony głównej -->
 <div class="links">
-    <a th:href="@{/categories/add}" class="button">Add New Category</a>
-    <a th:href="@{/}" class="button">Back to Home</a>
+    <a th:href="@{/categories/add}" class="button">Add New Category</a> <!-- Przycisk do dodawania kategorii -->
+    <a th:href="@{/}" class="button">Back to Home</a> <!-- Przycisk powrotu do strony głównej -->
 </div>
 
 </body>

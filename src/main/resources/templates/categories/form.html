@@ -2,11 +2,15 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Add/Edit Category</title>
+    <!-- Importowanie Normalize.css dla ujednolicenia stylów między przeglądarkami -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
     <style>
+        /* Stylowanie całej strony */
         body { font-family: Arial, sans-serif; margin: 0; background-color: #f4f7fa; padding: 20px; }
+        /* Nagłówek strony */
         h1 { color: #333; text-align: center; margin-bottom: 20px; }
 
+        /* Stylowanie formularza */
         form {
             margin-top: 20px;
             background-color: white;
@@ -18,12 +22,14 @@
             margin: 0 auto;
         }
 
+        /* Stylowanie etykiet */
         label {
             display: block;
             margin-bottom: 5px;
             font-weight: bold;
         }
 
+        /* Stylowanie pól formularza i przycisków */
         input, button {
             margin-bottom: 20px;
             width: 100%;
@@ -33,11 +39,13 @@
             border: 1px solid #ddd;
         }
 
+        /* Stylowanie pól formularza przy aktywacji */
         input:focus, button:focus {
             outline: none;
             border-color: #007bff;
         }
 
+        /* Stylowanie przycisku zapisu */
         button {
             background-color: #28a745;
             color: white;
@@ -47,10 +55,12 @@
             transition: background-color 0.3s ease;
         }
 
+        /* Efekt hover dla przycisku */
         button:hover {
             background-color: #218838;
         }
 
+        /* Stylowanie linku powrotu */
         a {
             display: inline-block;
             margin-top: 20px;
@@ -62,10 +72,12 @@
             text-align: center;
         }
 
+        /* Efekt hover dla linku */
         a:hover {
             background: #0056b3;
         }
 
+        /* Centrowanie linku powrotu */
         .back-link {
             text-align: center;
         }
@@ -73,8 +85,10 @@
 </head>
 <body>
 
+<!-- Nagłówek zmieniający się w zależności od tego, czy edytujemy, czy dodajemy kategorię -->
 <h1 th:text="${category.id != null ? 'Edit Category' : 'Add Category'}"></h1>
 
+<!-- Formularz do dodawania lub edycji kategorii -->
 <form th:action="@{${category.id != null ? '/categories/edit/' + category.id : '/categories/add'}}" th:object="${category}" method="post">
     <label for="name">Category Name:</label>
     <input type="text" id="name" th:field="*{name}" required>
@@ -85,6 +99,7 @@
     <button type="submit">Save Category</button>
 </form>
 
+<!-- Link do powrotu do listy kategorii -->
 <div class="back-link">
     <a th:href="@{/categories}">Back to Categories</a>
 </div>
